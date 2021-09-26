@@ -1,3 +1,4 @@
+using CashRegisterNStock.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,15 @@ namespace CashRegisterNStock.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CashRegisterNStock.API", Version = "v1" });
             });
+
+            services.AddCors(options => options.AddPolicy("default", builder =>
+            {
+                builder.WithOrigins("https://localhost:4200");
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            }));
+
+            services.AddDbContext<CrnsDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +53,8 @@ namespace CashRegisterNStock.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CashRegisterNStock.API v1"));
             }
+
+            app.UseCors("default");
 
             app.UseHttpsRedirection();
 
