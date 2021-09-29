@@ -23,10 +23,10 @@ namespace CashRegisterNStock.API.Services
             dc.SaveChanges();
         }
 
-        public IEnumerable<ProductIndexDTO> Read(int productId)
+        public IEnumerable<ProductIndexDTO> Read(int typeProductId) //A TESTER
         {
             return dc.Products
-                .Where(p => p.TypeProductId == productId)
+                .Where(p => p.TypeProductId == typeProductId)
                 .MapToList<ProductIndexDTO>();
         }
 

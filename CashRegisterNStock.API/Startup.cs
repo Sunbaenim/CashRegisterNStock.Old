@@ -1,3 +1,4 @@
+using CashRegisterNStock.API.Services;
 using CashRegisterNStock.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,9 @@ namespace CashRegisterNStock.API
             }));
 
             services.AddDbContext<CrnsDbContext>();
+
+            services.AddScoped<ProductService>();
+            services.AddScoped<TypeProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
