@@ -10,11 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="DTO\TypeProducts\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CashRegisterNStock.DAL\CashRegisterNStock.DAL.csproj" />
   </ItemGroup>
 

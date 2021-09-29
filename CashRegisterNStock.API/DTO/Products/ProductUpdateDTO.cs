@@ -1,11 +1,12 @@
 ﻿using CashRegisterNStock.API.DTO.Validators;
-using CashRegisterNStock.DAL.Entities.Products;
 using System.ComponentModel.DataAnnotations;
 
 namespace CashRegisterNStock.API.DTO.Products
 {
     public class ProductUpdateDTO
     {
+        [Required]
+        public int IdTypeProduct { get; set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
@@ -18,7 +19,5 @@ namespace CashRegisterNStock.API.DTO.Products
         public decimal Price { get; set; }
         [Required]
         public int Stock { get; set; }
-        [Required]
-        public TypeProduct TypeProduct { get; set; }
     }
 }
