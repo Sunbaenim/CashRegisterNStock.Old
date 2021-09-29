@@ -9,8 +9,8 @@ namespace CashRegisterNStock.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class TypeProductController : ControllerBase
     {
-        
+
     }
 }

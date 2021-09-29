@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CashRegisterNStock.DAL\CashRegisterNStock.DAL.csproj" />
+    <ProjectReference Include="..\ToolBox.AutoMapper\ToolBox.AutoMapper.csproj" />
   </ItemGroup>
 
 </Project>
