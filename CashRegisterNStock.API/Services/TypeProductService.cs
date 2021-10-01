@@ -1,6 +1,8 @@
-﻿using CashRegisterNStock.API.DTO.TypeProducts;
+﻿using CashRegisterNStock.API.DTO.Products;
+using CashRegisterNStock.API.DTO.TypeProducts;
 using CashRegisterNStock.DAL;
 using CashRegisterNStock.DAL.Entities.Products;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,19 +20,23 @@ namespace CashRegisterNStock.API.Services
             this.dc = dc;
         }
 
-        public void Create(TypeProductAdd form)
+        public void Create(TypeProductAddDTO form)
         {
             dc.TypeProducts.Add(form.MapTo<TypeProduct>());
 
             dc.SaveChanges();
         }
 
-        public IEnumerable<TypeProductIndex> Read()
+        public IEnumerable<TypeProductIndexDTO> Read()
         {
-            return dc.TypeProducts.MapToList<TypeProductIndex>();
+            TypeProduct typeProduct = dc.TypeProducts
+                .Include(tp => tp.Products)
+                .FirstOrDefault();
+
+            yield return typeProduct.MapTo<TypeProductIndexDTO>(tp => tp.Products = typeProduct.Products.MapToList<ProductIndexDTO>().ToList());
         }
 
-        public void Update(int id, TypeProductUpdate form)
+        public void Update(int id, TypeProductUpdateDTO form)
         {
             TypeProduct typeProduct = dc.TypeProducts.Find(id);
             form.MapToInstance<TypeProduct>(typeProduct);
@@ -45,7 +51,6 @@ namespace CashRegisterNStock.API.Services
                     .Where(tp => tp.Id == id)
                     .FirstOrDefault()
                 );
-
 
             dc.SaveChanges();
         }

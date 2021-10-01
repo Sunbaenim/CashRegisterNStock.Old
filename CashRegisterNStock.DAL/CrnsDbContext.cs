@@ -11,8 +11,8 @@ namespace CashRegisterNStock.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("server=DESKTOP-JHP2PQQ\\TB2019;initial catalog=CashRegisterNStockDB;integrated security=true");
-            optionsBuilder.UseSqlServer("server=SONIC-05;initial catalog=CashRegisterNStockDB;uid=sa;pwd=formation");
+            optionsBuilder.UseSqlServer("server=DESKTOP-JHP2PQQ\\TB2019;initial catalog=CashRegisterNStockDB;integrated security=true");
+            //optionsBuilder.UseSqlServer("server=SONIC-05;initial catalog=CashRegisterNStockDB;uid=sa;pwd=formation");
         }
 
         protected override void OnModelCreating(ModelBuilder mb)

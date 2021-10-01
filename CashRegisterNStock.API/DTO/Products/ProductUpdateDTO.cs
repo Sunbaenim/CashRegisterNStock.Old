@@ -6,7 +6,7 @@ namespace CashRegisterNStock.API.DTO.Products
     public class ProductUpdateDTO
     {
         [Required]
-        public int IdTypeProduct { get; set; }
+        public int TypeProductId { get; set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }

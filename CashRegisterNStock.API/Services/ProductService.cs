@@ -23,11 +23,19 @@ namespace CashRegisterNStock.API.Services
             dc.SaveChanges();
         }
 
-        public IEnumerable<ProductIndexDTO> Read(int typeProductId) //A TESTER
+        public IEnumerable<ProductIndexDTO> Read(int id)
         {
             return dc.Products
-                .Where(p => p.TypeProductId == typeProductId)
+                .Where(p => p.Id == id)
                 .MapToList<ProductIndexDTO>();
+        }
+
+        public ProductIndexDTO GetByName(ProductFilterDTO filter)
+        {
+            return dc.Products
+                .Where(p => p.Name == filter.Name)
+                .FirstOrDefault()
+                .MapTo<ProductIndexDTO>();
         }
 
         public void Update(int id, ProductUpdateDTO form)
@@ -37,6 +45,7 @@ namespace CashRegisterNStock.API.Services
                 .FirstOrDefault();
 
             form.MapToInstance<Product>(product);
+
             dc.SaveChanges();
         }
 

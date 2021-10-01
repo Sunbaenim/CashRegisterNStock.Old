@@ -21,27 +21,27 @@ namespace CashRegisterNStock.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTypeProducts()
+        public IActionResult Get()
         {
             return Ok(tpService.Read());
         }
 
         [HttpPost]
-        public IActionResult AddTypeProduct(TypeProductAdd form)
+        public IActionResult Post(TypeProductAddDTO form)
         {
             tpService.Create(form);
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateTypeProduct(int id, TypeProductUpdate form)
+        public IActionResult Put(int id, TypeProductUpdateDTO form)
         {
             tpService.Update(id, form);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteTypeProduct(int id)
+        public IActionResult Delete(int id)
         {
             tpService.Delete(id);
             return NoContent();

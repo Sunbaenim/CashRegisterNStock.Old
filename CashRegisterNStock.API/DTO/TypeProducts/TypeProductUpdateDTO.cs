@@ -2,7 +2,7 @@
 
 namespace CashRegisterNStock.API.DTO.TypeProducts
 {
-    public class TypeProductUpdate
+    public class TypeProductUpdateDTO
     {
         [Required]
         [MaxLength(50)]

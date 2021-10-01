@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CashRegisterNStock.API.DTO.TypeProducts
 {
-    public class TypeProductIndex
+    public class TypeProductIndexDTO
     {
         public string Name { get; set; }
-        public List<ProductIndexDTO> ListProducts { get; set; }
+        public List<ProductIndexDTO> Products { get; set; }
     }
 }

@@ -21,28 +21,33 @@ namespace CashRegisterNStock.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProducts()
+        public IActionResult GetByName([FromQuery] ProductFilterDTO filter)
         {
-            //return Ok(pService.Read());
-            return StatusCode(501);
+            return Ok(pService.GetByName(filter));
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            return Ok(pService.Read(id));
         }
 
         [HttpPost]
-        public IActionResult AddProduct(ProductAddDTO form)
+        public IActionResult Post(ProductAddDTO form)
         {
             pService.Create(form);
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, ProductUpdateDTO form)
+        public IActionResult Put(int id, ProductUpdateDTO form)
         {
             pService.Update(id, form);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(int id)
+        public IActionResult Delete(int id)
         {
             pService.Delete(id);
             return NoContent();
