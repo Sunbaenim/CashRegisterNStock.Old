@@ -29,11 +29,14 @@ namespace CashRegisterNStock.API.Services
 
         public IEnumerable<TypeProductIndexDTO> Read()
         {
-            TypeProduct typeProduct = dc.TypeProducts
-                .Include(tp => tp.Products)
-                .FirstOrDefault();
-
-            yield return typeProduct.MapTo<TypeProductIndexDTO>(tp => tp.Products = typeProduct.Products.MapToList<ProductIndexDTO>().ToList());
+            foreach (TypeProduct typeProduct in dc.TypeProducts.Include(tp => tp.Products))
+            {
+                yield return new TypeProductIndexDTO
+                {
+                    Name = typeProduct.Name,
+                    Products = typeProduct.Products.MapToList<ProductIndexDTO>().ToList()
+                };
+            }
         }
 
         public void Update(int id, TypeProductUpdateDTO form)

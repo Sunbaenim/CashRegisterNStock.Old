@@ -37,7 +37,7 @@ namespace CashRegisterNStock.API
 
             services.AddCors(options => options.AddPolicy("default", builder =>
             {
-                builder.WithOrigins("https://localhost:4200");
+                builder.WithOrigins("http://localhost:8100");
                 builder.AllowAnyMethod();
                 builder.AllowAnyHeader();
             }));
