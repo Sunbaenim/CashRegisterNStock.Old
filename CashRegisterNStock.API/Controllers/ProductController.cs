@@ -48,6 +48,7 @@ namespace CashRegisterNStock.API.Controllers
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
+
         {
             pService.Delete(id);
             return NoContent();
