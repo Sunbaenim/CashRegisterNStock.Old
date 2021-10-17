@@ -2,23 +2,46 @@
 using CashRegisterNStock.DAL;
 using CashRegisterNStock.DAL.Entities.Products;
 using System.Collections.Generic;
+using System.IO;
+using System.Web;
 using System.Linq;
 using ToolBox.AutoMapper.Mappers;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace CashRegisterNStock.API.Services
 {
     public class ProductService
     {
         private readonly CrnsDbContext dc;
+        private readonly HttpContext ctx;
 
-        public ProductService(CrnsDbContext dc)
+        public ProductService(CrnsDbContext dc, IHttpContextAccessor httpContext)
         {
             this.dc = dc;
+            this.ctx = httpContext.HttpContext;
         }
 
         public void Create(ProductAddDTO form)
         {
-            dc.Products.Add(form.MapTo<Product>());
+            string extensionFile = form.Picture.Split("/", 3)[1].Split(";")[0];
+            string base64String = form.Picture.Split(",")[1];
+            byte[] base64 = Convert.FromBase64String(base64String);
+
+            Guid guid = Guid.NewGuid();
+            string filePath = "Assets/Products/" + form.Name + "-" + guid + "." + extensionFile;
+
+            File.WriteAllBytes(filePath, base64);
+
+            dc.Products.Add(new Product
+            {
+                TypeProductId = form.TypeProductId,
+                Name = form.Name,
+                Picture = extensionFile,
+                Description = form.Description,
+                Price = form.Price,
+                Stock = form.Stock
+            });
 
             dc.SaveChanges();
         }

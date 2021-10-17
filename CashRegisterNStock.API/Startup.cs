@@ -2,6 +2,7 @@ using CashRegisterNStock.API.Services;
 using CashRegisterNStock.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -28,8 +29,9 @@ namespace CashRegisterNStock.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CashRegisterNStock.API", Version = "v1" });
@@ -37,15 +39,15 @@ namespace CashRegisterNStock.API
 
             services.AddCors(options => options.AddPolicy("default", builder =>
             {
-                builder.WithOrigins("http://localhost:8100");
-                builder.WithOrigins("http://kazekotei.somee.com");
+                //builder.WithOrigins("http://localhost:8100");
+                builder.AllowAnyOrigin();
                 builder.AllowAnyMethod();
                 builder.AllowAnyHeader();
             }));
 
             services.AddDbContext<CrnsDbContext>();
-
             services.AddScoped<ProductService>();
+           
             services.AddScoped<TypeProductService>();
         }
 
