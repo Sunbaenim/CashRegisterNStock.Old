@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CashRegisterNStock.DAL.Configurations
+namespace CashRegisterNStock.DAL.Configurations.Products
 {
-    class TypeProductConfig : IEntityTypeConfiguration<TypeProduct>
+    class CategoryConfig : IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<TypeProduct> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.Property(t => t.Name)
+            builder.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(50);
         }

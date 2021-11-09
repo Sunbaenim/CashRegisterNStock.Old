@@ -22,14 +22,14 @@ namespace CashRegisterNStock.API.Services
 
         public void Create(TypeProductAddDTO form)
         {
-            dc.TypeProducts.Add(form.MapTo<TypeProduct>());
+            dc.TypeProducts.Add(form.MapTo<Category>());
 
             dc.SaveChanges();
         }
 
         public IEnumerable<TypeProductIndexDTO> Read()
         {
-            foreach (TypeProduct typeProduct in dc.TypeProducts.Include(tp => tp.Products))
+            foreach (Category typeProduct in dc.TypeProducts.Include(tp => tp.Products))
             {
                 yield return new TypeProductIndexDTO
                 {
@@ -41,8 +41,8 @@ namespace CashRegisterNStock.API.Services
 
         public void Update(int id, TypeProductUpdateDTO form)
         {
-            TypeProduct typeProduct = dc.TypeProducts.Find(id);
-            form.MapToInstance<TypeProduct>(typeProduct);
+            Category typeProduct = dc.TypeProducts.Find(id);
+            form.MapToInstance<Category>(typeProduct);
 
             dc.SaveChanges();
         }

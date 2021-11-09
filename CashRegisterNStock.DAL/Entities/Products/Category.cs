@@ -2,7 +2,7 @@
 
 namespace CashRegisterNStock.DAL.Entities.Products
 {
-    public class TypeProduct
+    public class Category
     {
         public int Id { get; set; }
         public string Name { get; set; }
