@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CashRegisterNStock.DAL.Configurations
+namespace CashRegisterNStock.DAL.Configurations.Products
 {
     class ProductConfig : IEntityTypeConfiguration<Product>
     {
@@ -22,8 +22,13 @@ namespace CashRegisterNStock.DAL.Configurations
             builder.Property(p => p.Stock)
                 .IsRequired();
 
-            builder.HasOne(p => p.TypeProduct)
-                .WithMany(t => t.Products)
+            builder.HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(p => p.OrderLine)
+                .WithOne(ol => ol.Product)
+                .HasForeignKey(p => p.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

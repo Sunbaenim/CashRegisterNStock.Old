@@ -1,4 +1,4 @@
-﻿using CashRegisterNStock.DAL.Configurations;
+﻿using CashRegisterNStock.DAL.Configurations.Products;
 using CashRegisterNStock.DAL.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +6,7 @@ namespace CashRegisterNStock.DAL
 {
     public class CrnsDbContext : DbContext
     {
-        public DbSet<TypeProduct> TypeProducts { get; set; }
+        public DbSet<Category> TypeProducts { get; set; }
         public DbSet<Product> Products { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -18,8 +18,10 @@ namespace CashRegisterNStock.DAL
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
-            mb.ApplyConfiguration(new TypeProductConfig());
+            mb.ApplyConfiguration(new CategoryConfig());
             mb.ApplyConfiguration(new ProductConfig());
+            mb.ApplyConfiguration(new OrderConfig());
+            mb.ApplyConfiguration(new OrderLineConfig());
         }
     }
 }
