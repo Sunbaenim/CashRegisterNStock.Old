@@ -29,15 +29,17 @@ namespace CashRegisterNStock.API.Services
             byte[] base64 = Convert.FromBase64String(base64String);
 
             Guid guid = Guid.NewGuid();
-            string filePath = "Assets/Products/" + form.Name + "-" + guid + "." + extensionFile;
+            string filePath = "assets/products/" + form.Name + "-" + guid + "." + extensionFile;
 
-            File.WriteAllBytes(filePath, base64);
+            File.WriteAllBytes("wwwroot/" + filePath, base64);
+
+            string serverFilePath = ctx.Request.Scheme + "://" + ctx.Request.Host.Value + "/" + filePath;
 
             dc.Products.Add(new Product
             {
                 TypeProductId = form.TypeProductId,
                 Name = form.Name,
-                Picture = extensionFile,
+                Picture = serverFilePath,
                 Description = form.Description,
                 Price = form.Price,
                 Stock = form.Stock
@@ -46,19 +48,18 @@ namespace CashRegisterNStock.API.Services
             dc.SaveChanges();
         }
 
-        public IEnumerable<ProductIndexDTO> Read(int id)
+        public IEnumerable<ProductIndexDTO> GetAll(ProductFilterDTO filter)
+        {
+            return dc.Products
+                .Where(p => filter.Name == null || p.Name == filter.Name)
+                .MapToList<ProductIndexDTO>();
+        }
+
+        public IEnumerable<ProductIndexDTO> GetByID(int id)
         {
             return dc.Products
                 .Where(p => p.Id == id)
                 .MapToList<ProductIndexDTO>();
-        }
-
-        public ProductIndexDTO GetByName(ProductFilterDTO filter)
-        {
-            return dc.Products
-                .Where(p => p.Name == filter.Name)
-                .FirstOrDefault()
-                .MapTo<ProductIndexDTO>();
         }
 
         public void Update(int id, ProductUpdateDTO form)

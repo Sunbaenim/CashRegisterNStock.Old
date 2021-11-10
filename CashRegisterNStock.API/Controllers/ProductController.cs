@@ -21,15 +21,15 @@ namespace CashRegisterNStock.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByName([FromQuery] ProductFilterDTO filter)
+        public IActionResult Get([FromQuery] ProductFilterDTO filter)
         {
-            return Ok(pService.GetByName(filter));
+            return Ok(pService.GetAll(filter));
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetByID(int id)
         {
-            return Ok(pService.Read(id));
+            return Ok(pService.GetByID(id));
         }
 
         [HttpPost]

@@ -33,6 +33,7 @@ namespace CashRegisterNStock.API.Services
             {
                 yield return new TypeProductIndexDTO
                 {
+                    Id = typeProduct.Id,
                     Name = typeProduct.Name,
                     Products = typeProduct.Products.MapToList<ProductIndexDTO>().ToList()
                 };

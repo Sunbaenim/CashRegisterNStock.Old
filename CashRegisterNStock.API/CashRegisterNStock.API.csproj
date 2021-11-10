@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ToolBox.AutoMapper\ToolBox.AutoMapper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\products\" />
+  </ItemGroup>
+
 </Project>
