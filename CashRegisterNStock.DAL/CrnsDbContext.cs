@@ -8,6 +8,8 @@ namespace CashRegisterNStock.DAL
     {
         public DbSet<Category> TypeProducts { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<OrderLine> OrderLine { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -46,9 +46,12 @@ namespace CashRegisterNStock.API
             }));
 
             services.AddDbContext<CrnsDbContext>();
+
             services.AddScoped<ProductService>();
-           
             services.AddScoped<TypeProductService>();
+
+            services.AddScoped<OrderService>();
+            services.AddScoped<OrderLineService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
