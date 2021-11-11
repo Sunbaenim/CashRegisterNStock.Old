@@ -6,7 +6,7 @@ namespace CashRegisterNStock.DAL
 {
     public class CrnsDbContext : DbContext
     {
-        public DbSet<Category> TypeProducts { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderLine> OrderLine { get; set; }

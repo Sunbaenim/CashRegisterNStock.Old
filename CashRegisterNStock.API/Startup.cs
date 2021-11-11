@@ -48,7 +48,7 @@ namespace CashRegisterNStock.API
             services.AddDbContext<CrnsDbContext>();
 
             services.AddScoped<ProductService>();
-            services.AddScoped<TypeProductService>();
+            services.AddScoped<CategoryService>();
 
             services.AddScoped<OrderService>();
             services.AddScoped<OrderLineService>();

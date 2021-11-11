@@ -1,21 +1,16 @@
-﻿using CashRegisterNStock.API.DTO.TypeProducts;
+﻿using CashRegisterNStock.API.DTO.Categories;
 using CashRegisterNStock.API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CashRegisterNStock.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TypeProductController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly TypeProductService tpService;
+        private readonly CategoryService tpService;
 
-        public TypeProductController(TypeProductService tpService)
+        public CategoryController(CategoryService tpService)
         {
             this.tpService = tpService;
         }
@@ -27,14 +22,14 @@ namespace CashRegisterNStock.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(TypeProductAddDTO form)
+        public IActionResult Post(CategoryAddDTO form)
         {
             tpService.Create(form);
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, TypeProductUpdateDTO form)
+        public IActionResult Put(int id, CategoryUpdateDTO form)
         {
             tpService.Update(id, form);
             return NoContent();

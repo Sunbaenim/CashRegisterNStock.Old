@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CashRegisterNStock.API.DTO.TypeProducts
+namespace CashRegisterNStock.API.DTO.Categories
 {
-    public class TypeProductUpdateDTO
+    public class CategoryUpdateDTO
     {
         [Required]
         [MaxLength(50)]
