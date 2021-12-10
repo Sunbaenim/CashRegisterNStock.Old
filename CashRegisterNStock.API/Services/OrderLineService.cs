@@ -1,6 +1,9 @@
-﻿using CashRegisterNStock.API.DTO.OrderLine;
+﻿using CashRegisterNStock.API.DTO.Order;
+using CashRegisterNStock.API.DTO.OrderLine;
+using CashRegisterNStock.API.DTO.Products;
 using CashRegisterNStock.DAL;
 using CashRegisterNStock.DAL.Entities.Products;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using ToolBox.AutoMapper.Mappers;
@@ -29,8 +32,16 @@ namespace CashRegisterNStock.API.Services
 
         public IEnumerable<OrderLineIndexDTO> GetAll()
         {
-            return dc.OrderLine
-                .MapToList<OrderLineIndexDTO>();
+            foreach (OrderLine orderLine in dc.OrderLine.Include(ol => ol.Order).Include(ol => ol.Product))
+            {
+                yield return new OrderLineIndexDTO
+                {
+                    Order = orderLine.Order.MapTo<OrderIndexDTO>(),
+                    Product = orderLine.Product.MapTo<ProductIndexDTO>(),
+                    Quantity = orderLine.Quantity,
+                    Price = orderLine.Price
+                };
+            }
         }
 
         public OrderLineIndexDTO GetById(int orderId, int productId)
@@ -48,6 +59,17 @@ namespace CashRegisterNStock.API.Services
                 .FirstOrDefault();
 
             form.MapToInstance<OrderLine>(orderLine);
+
+            dc.SaveChanges();
+        }
+
+        public void Delete(int orderId, int productId)
+        {
+            dc.OrderLine.Remove(
+                dc.OrderLine
+                .Where(ol => ol.OrderId == orderId && ol.ProductId == productId)
+                .FirstOrDefault()
+                );
 
             dc.SaveChanges();
         }

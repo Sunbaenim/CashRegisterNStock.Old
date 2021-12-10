@@ -40,5 +40,12 @@ namespace CashRegisterNStock.API.Controllers
             _olService.Update(orderId, productId, form);
             return NoContent();
         }
+
+        [HttpDelete("{orderId}, {productId}")]
+        public IActionResult Delete(int orderId, int productId)
+        {
+            _olService.Delete(orderId, productId);
+            return NoContent();
+        }
     }
 }
