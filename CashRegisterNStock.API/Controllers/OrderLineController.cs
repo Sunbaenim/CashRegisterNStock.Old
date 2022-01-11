@@ -21,6 +21,12 @@ namespace CashRegisterNStock.API.Controllers
             return Ok(_olService.GetAll());
         }
 
+        [HttpGet("{orderId}")]
+        public IActionResult GetAllByOrderId(int orderId)
+        {
+            return Ok(_olService.GetAllByOrderId(orderId));
+        }
+
         [HttpGet("{orderId}, {productId}")]
         public IActionResult GetById(int orderId, int productId)
         {
@@ -34,10 +40,10 @@ namespace CashRegisterNStock.API.Controllers
             return NoContent();
         }
 
-        [HttpPut("{orderId}, {productId}")]
-        public IActionResult Put(int orderId, int productId, OrderLineAddDTO form)
+        [HttpPut]
+        public IActionResult Put(OrderLineAddDTO form)
         {
-            _olService.Update(orderId, productId, form);
+            _olService.Update(form);
             return NoContent();
         }
 

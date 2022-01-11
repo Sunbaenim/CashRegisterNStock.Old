@@ -9,7 +9,8 @@ namespace CashRegisterNStock.DAL.Configurations.Products
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.Property(o => o.Status)
-                .IsRequired();
+                .IsRequired()
+                .HasConversion<string>();
 
             builder.HasMany(o => o.OrderLine)
                 .WithOne(ol => ol.Order);

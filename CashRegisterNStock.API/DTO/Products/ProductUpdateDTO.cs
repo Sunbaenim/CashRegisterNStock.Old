@@ -6,6 +6,8 @@ namespace CashRegisterNStock.API.DTO.Products
     public class ProductUpdateDTO
     {
         [Required]
+        public int Id { get; set; }
+        [Required]
         public int CategoryId { get; set; }
         [Required]
         [MaxLength(50)]

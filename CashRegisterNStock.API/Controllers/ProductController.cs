@@ -34,10 +34,18 @@ namespace CashRegisterNStock.API.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, ProductUpdateDTO form)
+        [HttpPut]
+        public IActionResult Put(ProductUpdateDTO form)
         {
-            pService.Update(id, form);
+            pService.Update(form);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("Stock")]
+        public IActionResult DecrementStock(ProductChangeStockDTO form)
+        {
+            pService.DecrementStock(form);
             return NoContent();
         }
 

@@ -33,14 +33,14 @@ namespace CashRegisterNStock.API.Services
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    Products = category.Products.MapToList<ProductIndexDTO>().ToList()
+                    Products = category.Products.MapToList<ProductIndexDTO>(p => p.CategoryId = category.Id).ToList()
                 };
             }
         }
 
-        public void Update(int id, CategoryUpdateDTO form)
+        public void Update(CategoryUpdateDTO form)
         {
-            Category category = dc.Categories.Find(id);
+            Category category = dc.Categories.Find(form.Id);
             form.MapToInstance<Category>(category);
 
             dc.SaveChanges();

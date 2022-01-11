@@ -44,6 +44,20 @@ namespace CashRegisterNStock.API.Services
             }
         }
 
+        public IEnumerable<OrderLineIndexDTO> GetAllByOrderId(int orderId)
+        {
+            foreach (OrderLine orderLine in dc.OrderLine.Include(ol => ol.Order).Include(ol => ol.Product).Where(ol => ol.OrderId == orderId))
+            {
+                yield return new OrderLineIndexDTO
+                {
+                    Order = orderLine.Order.MapTo<OrderIndexDTO>(),
+                    Product = orderLine.Product.MapTo<ProductIndexDTO>(),
+                    Quantity = orderLine.Quantity,
+                    Price = orderLine.Price
+                };
+            }
+        }
+
         public OrderLineIndexDTO GetById(int orderId, int productId)
         {
             return dc.OrderLine
@@ -52,10 +66,10 @@ namespace CashRegisterNStock.API.Services
                 .MapTo<OrderLineIndexDTO>();
         }
 
-        public void Update(int orderId, int productId, OrderLineAddDTO form)
+        public void Update(OrderLineAddDTO form)
         {
             OrderLine orderLine = dc.OrderLine
-                .Where(ol => ol.OrderId == orderId && ol.ProductId == productId)
+                .Where(ol => ol.OrderId == form.OrderId && ol.ProductId == form.ProductId)
                 .FirstOrDefault();
 
             form.MapToInstance<OrderLine>(orderLine);

@@ -32,13 +32,13 @@ namespace CashRegisterNStock.API.Services
 
             File.WriteAllBytes("wwwroot/" + filePath, base64);
 
-            string serverFilePath = ctx.Request.Scheme + "://" + ctx.Request.Host.Value + "/" + filePath;
+            //string serverFilePath = ctx.Request.Scheme + "://" + ctx.Request.Host.Value + "/" + filePath;
 
             dc.Products.Add(new Product
             {
                 CategoryId = form.CategoryId,
                 Name = form.Name,
-                ImageURL = serverFilePath,
+                ImageURL = filePath,
                 Description = form.Description,
                 Price = form.Price,
                 Stock = form.Stock
@@ -61,13 +61,24 @@ namespace CashRegisterNStock.API.Services
                 .MapToList<ProductIndexDTO>();
         }
 
-        public void Update(int id, ProductUpdateDTO form)
+        public void Update(ProductUpdateDTO form)
         {
             Product product = dc.Products
-                .Where(p => p.Id == id)
+                .Where(p => p.Id == form.Id)
                 .FirstOrDefault();
 
             form.MapToInstance<Product>(product);
+
+            dc.SaveChanges();
+        }
+
+        public void DecrementStock(ProductChangeStockDTO form)
+        {
+            Product product = dc.Products
+                .Where(p => p.Id == form.Id)
+                .FirstOrDefault();
+
+            product.Stock -= form.Quantity;
 
             dc.SaveChanges();
         }
