@@ -1,4 +1,5 @@
-﻿using CashRegisterNStock.API.DTO.Categories;
+﻿using CashRegisterNStock.API.Authorizations;
+using CashRegisterNStock.API.DTO.Categories;
 using CashRegisterNStock.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,7 @@ namespace CashRegisterNStock.API.Controllers
         }
 
         [HttpPost]
+        [ApiAuthorize]
         public IActionResult Post(CategoryAddDTO form)
         {
             tpService.Create(form);
@@ -29,6 +31,7 @@ namespace CashRegisterNStock.API.Controllers
         }
 
         [HttpPut]
+        [ApiAuthorize]
         public IActionResult Put(CategoryUpdateDTO form)
         {
             tpService.Update(form);
@@ -36,6 +39,7 @@ namespace CashRegisterNStock.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ApiAuthorize]
         public IActionResult Delete(int id)
         {
             tpService.Delete(id);

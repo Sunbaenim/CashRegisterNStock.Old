@@ -15,6 +15,10 @@ namespace CashRegisterNStock.DAL.Configurations.Products
 
             builder.Property(ol => ol.Price)
                 .IsRequired();
+
+            builder.HasOne(ol => ol.Order)
+                .WithMany(o => o.OrderLine)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

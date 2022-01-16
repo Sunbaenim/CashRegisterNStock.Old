@@ -1,6 +1,10 @@
 ﻿using CashRegisterNStock.DAL.Configurations.Products;
+using CashRegisterNStock.DAL.Entities.Auth;
 using CashRegisterNStock.DAL.Entities.Products;
 using Microsoft.EntityFrameworkCore;
+using ToolBox.Security.Hash;
+using System.Security.Cryptography;
+using System;
 
 namespace CashRegisterNStock.DAL
 {
@@ -10,6 +14,7 @@ namespace CashRegisterNStock.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderLine> OrderLine { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,6 +29,12 @@ namespace CashRegisterNStock.DAL
             mb.ApplyConfiguration(new ProductConfig());
             mb.ApplyConfiguration(new OrderConfig());
             mb.ApplyConfiguration(new OrderLineConfig());
+
+            HashService hS = new HashService(new SHA512CryptoServiceProvider());
+            Guid salt = Guid.NewGuid();
+            byte[] encodedPwd = hS.Hash("admin" + salt.ToString());
+
+            mb.Entity<User>().HasData(new User { Id = 1, Username = "Admin", Salt = salt, Password = encodedPwd }); ;
         }
     }
 }

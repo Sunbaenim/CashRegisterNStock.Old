@@ -15,6 +15,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ToolBox.Security.Hash;
+using System.Security.Cryptography;
+using ToolBox.Security.Configurations;
+using System.IdentityModel.Tokens.Jwt;
+using ToolBox.Security.Services;
+using ToolBox.Security.Middlewares;
 
 namespace CashRegisterNStock.API
 {
@@ -42,6 +48,22 @@ namespace CashRegisterNStock.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CashRegisterNStock.API", Version = "v1" });
+                OpenApiSecurityScheme securitySchema = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+                c.AddSecurityDefinition("Bearer", securitySchema);
+                var securityRequirement = new OpenApiSecurityRequirement();
+                securityRequirement.Add(securitySchema, new[] { "Bearer" });
+                c.AddSecurityRequirement(securityRequirement);
             });
 
             services.AddCors(options => options.AddPolicy("default", builder =>
@@ -59,6 +81,14 @@ namespace CashRegisterNStock.API
 
             services.AddScoped<OrderService>();
             services.AddScoped<OrderLineService>();
+            services.AddScoped<AuthService>();
+
+            services.AddSingleton(sb => Configuration.GetSection("JWT").Get<JwtConfig>());
+            services.AddScoped<JwtSecurityTokenHandler>();
+            services.AddScoped<JwtService>();
+
+            services.AddScoped<HashService>();
+            services.AddScoped<HashAlgorithm, SHA512CryptoServiceProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +106,8 @@ namespace CashRegisterNStock.API
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseRouting();
 

@@ -17,13 +17,15 @@ namespace CashRegisterNStock.API.Services
             this.dc = dc;
         }
 
-        public void Create(OrderAddDTO form)
+        public int Create(OrderAddDTO form)
         {
-            dc.Order.Add(new Order {
+            var entity = dc.Order.Add(new Order {
                 Status = (Status)form.Status
             });
 
             dc.SaveChanges();
+
+            return entity.Entity.Id;
         }
 
         public IEnumerable<OrderIndexDTO> GetAll()
@@ -47,6 +49,17 @@ namespace CashRegisterNStock.API.Services
                 .FirstOrDefault();
 
             form.MapToInstance<Order>(order);
+
+            dc.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            dc.Order.Remove(
+                dc.Order
+                .Where(o => o.Id == id)
+                .FirstOrDefault()
+                );
 
             dc.SaveChanges();
         }

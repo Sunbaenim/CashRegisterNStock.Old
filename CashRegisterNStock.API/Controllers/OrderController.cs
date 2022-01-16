@@ -35,14 +35,21 @@ namespace CashRegisterNStock.API.Controllers
         [HttpPost]
         public IActionResult Post(OrderAddDTO form)
         {
-            _oService.Create(form);
-            return NoContent();
+            int id = _oService.Create(form);
+            return Ok(_oService.GetById(id));
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, OrderAddDTO form)
         {
             _oService.Update(id, form);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _oService.Delete(id);
             return NoContent();
         }
     }

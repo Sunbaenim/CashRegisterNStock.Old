@@ -13,4 +13,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToolBox.Security\ToolBox.Security.csproj" />
+  </ItemGroup>
+
 </Project>

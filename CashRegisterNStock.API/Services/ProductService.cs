@@ -63,6 +63,17 @@ namespace CashRegisterNStock.API.Services
 
         public void Update(ProductUpdateDTO form)
         {
+            string extensionFile = form.ImageURL.Split("/", 3)[1].Split(";")[0];
+            string base64String = form.ImageURL.Split(",")[1];
+            byte[] base64 = Convert.FromBase64String(base64String);
+
+            Guid guid = Guid.NewGuid();
+            string filePath = "assets/products/" + form.Name + "-" + guid + "." + extensionFile;
+
+            File.WriteAllBytes("wwwroot/" + filePath, base64);
+
+            form.ImageURL = filePath;
+
             Product product = dc.Products
                 .Where(p => p.Id == form.Id)
                 .FirstOrDefault();
